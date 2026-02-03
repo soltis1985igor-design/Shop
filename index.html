@@ -3,126 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>СОНЕЧКО | Магазин</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>СОНЕЧКО - Супермаркет</title>
     <style>
-        :root { --primary: #83b735; --bg: #f0f2f5; --white: #ffffff; --text: #2d3436; --border: #e0e0e0; --np: #ff392e; --up: #ffc20e; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+        /* ПОВНИЙ ПОВТОР ТВОГО ДИЗАЙНУ */
+        :root { --primary: #83b735; --bg: #f0f2f5; --white: #ffffff; }
+        body { font-family: 'Inter', sans-serif; background: #f8f9fa; margin: 0; color: #333; }
         
-        /* Навбар */
-        .navbar { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 22px; font-weight: 800; text-decoration: none; color: var(--text); }
-        .logo span { color: var(--primary); }
-        .cart-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; position: relative; font-weight: bold; }
-        .badge { position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; border: 2px solid white; }
+        .header { background: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .logo span { color: #83b735; }
+        
+        .cart-btn { background: #83b735; color: white; border: none; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: bold; position: relative; display: flex; align-items: center; gap: 8px; }
+        .badge { position: absolute; top: -5px; right: -5px; background: #ff3b30; color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; border: 2px solid white; }
 
-        /* Магазин */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; padding: 40px 5%; }
-        .card { background: white; border-radius: 20px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .card img { width: 100%; height: 150px; object-fit: contain; }
-        .btn-add { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; padding: 40px 5%; }
+        .product-card { background: white; border-radius: 25px; padding: 25px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: 0.3s; }
+        .product-card img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 15px; }
+        .product-card h4 { margin: 10px 0; font-size: 18px; }
+        .price { color: #83b735; font-size: 20px; font-weight: 800; margin-bottom: 15px; }
+        .add-to-cart { background: #83b735; color: white; border: none; padding: 12px; width: 100%; border-radius: 15px; cursor: pointer; font-weight: bold; font-size: 16px; }
 
-        /* Оформлення */
-        #checkout-page { display: none; padding: 20px 5%; }
-        .checkout-container { display: grid; grid-template-columns: 1fr 400px; gap: 30px; max-width: 1200px; margin: 0 auto; }
+        /* ТВІЙ ДИЗАЙН ОФОРМЛЕННЯ (БЛОКИ) */
+        #checkout-page { display: none; padding: 30px 5%; background: #f0f2f5; }
+        .checkout-container { display: grid; grid-template-columns: 1fr 380px; gap: 30px; max-width: 1200px; margin: 0 auto; }
         @media (max-width: 900px) { .checkout-container { grid-template-columns: 1fr; } }
-        .section-box { background: var(--white); border-radius: 20px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        h2 { font-size: 20px; margin-top: 0; display: flex; align-items: center; gap: 10px; }
-        h2 span { background: var(--primary); color: white; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 14px; }
-        .form-control { width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; box-sizing: border-box; margin-bottom: 12px; }
-        .fio-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .delivery-methods { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
-        .method-card { border: 2px solid var(--border); border-radius: 15px; padding: 15px 10px; cursor: pointer; text-align: center; transition: 0.3s; background: #fff; }
-        .method-card.active { border-color: var(--primary); background: #f9fff0; }
-        #np-card.active { border-color: var(--np); color: var(--np); }
-        #up-card.active { border-color: var(--up); color: #b78a00; }
-        .total-amount { font-size: 24px; font-weight: 800; color: var(--primary); margin: 20px 0; text-align: center; }
-        .btn-confirm { background: var(--primary); color: white; width: 100%; border: none; padding: 20px; border-radius: 20px; font-size: 20px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
         
-        /* Кошик */
-        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; z-index: 1500; }
-        .cart-sidebar { position: fixed; right: -100%; top: 0; width: 350px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 20px; box-shadow: -10px 0 20px rgba(0,0,0,0.1); }
+        .box { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .step { background: #83b735; color: white; width: 25px; height: 25px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 14px; margin-right: 10px; }
+        .input-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #e0e0e0; border-radius: 10px; box-sizing: border-box; font-size: 15px; outline: none; }
+        
+        .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .method { border: 2px solid #eee; border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; font-weight: bold; }
+        .method.active { border-color: #ff3b30; color: #ff3b30; } /* Як на скріншоті для НП */
+        
+        .summary-total { font-size: 24px; font-weight: 800; color: #83b735; margin: 20px 0; text-align: center; }
+        .btn-confirm { background: #a2d149; color: white; border: none; width: 100%; padding: 20px; border-radius: 20px; font-size: 20px; font-weight: bold; cursor: pointer; }
+
+        /* БІЧНИЙ КОШИК */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: none; z-index: 1500; }
+        .cart-sidebar { position: fixed; right: -100%; top: 0; width: 350px; height: 100%; background: white; z-index: 2000; transition: 0.4s; padding: 25px; box-shadow: -5px 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .cart-sidebar.active { right: 0; }
     </style>
 </head>
 <body>
 
-<div class="navbar">
-    <a href="#" class="logo" onclick="location.reload()">СУПЕРМАРКЕТ <span>СОНЕЧКО</span></a>
-    <button class="cart-btn" onclick="toggleCart(true)">🛒 Кошик <span class="badge" id="cart-count">0</span></button>
+<div class="header">
+    <div class="logo">СУПЕРМАРКЕТ <span>СОНЕЧКО</span></div>
+    <button class="cart-btn" onclick="toggleCart(true)">
+        🛒 Кошик <span class="badge" id="cart-count">0</span>
+    </button>
 </div>
 
 <div id="shop-page">
-    <div class="grid" id="products"></div>
+    <div class="products-grid" id="product-list"></div>
 </div>
 
 <div id="checkout-page">
-    <h1 style="text-align: center; margin-bottom: 30px;">Оформлення замовлення</h1>
-    <form id="checkout-form">
+    <h1 style="text-align: center; margin-bottom: 40px;">Оформлення замовлення</h1>
+    <form id="order-form">
         <div class="checkout-container">
-            <div>
-                <div class="section-box">
-                    <h2><span>1</span> Ваші дані</h2>
-                    <div class="fio-grid">
-                        <input type="text" name="Прізвище" class="form-control" required placeholder="Прізвище">
-                        <input type="text" name="Ім'я" class="form-control" required placeholder="Ім'я">
-                        <input type="text" name="По_батькові" class="form-control" required placeholder="По батькові">
+            <div class="left">
+                <div class="box">
+                    <h3><span class="step">1</span> Ваші дані</h3>
+                    <div class="input-group">
+                        <input type="text" placeholder="Прізвище" required>
+                        <input type="text" placeholder="Ім'я" required>
+                        <input type="text" placeholder="По батькові">
                     </div>
-                    <input type="tel" name="Телефон" class="form-control" required placeholder="Номер телефону (+380...)">
+                    <input type="text" placeholder="Номер телефону (+380...)" required>
                 </div>
-
-                <div class="section-box">
-                    <h2><span>2</span> Доставка</h2>
-                    <div class="delivery-methods">
-                        <div class="method-card active" id="np-card" onclick="setDelivery('NP')">
-                            <div style="font-size:30px">📦</div>
-                            <div style="font-weight:700; font-size:12px">НОВА ПОШТА</div>
-                        </div>
-                        <div class="method-card" id="up-card" onclick="setDelivery('UP')">
-                            <div style="font-size:30px">📮</div>
-                            <div style="font-weight:700; font-size:12px">УКРПОШТА</div>
-                        </div>
+                <div class="box">
+                    <h3><span class="step">2</span> Доставка</h3>
+                    <div class="method-grid">
+                        <div class="method active">📦 НОВА ПОШТА</div>
+                        <div class="method">📮 УКРПОШТА</div>
                     </div>
-                    <input type="hidden" name="Служба_Доставки" id="delivery-type" value="Нова Пошта">
-                    <input type="text" name="Місто" class="form-control" required placeholder="Місто / Село">
-                    <input type="text" name="Відділення" class="form-control" required placeholder="Номер відділення">
-                </div>
-
-                <div class="section-box">
-                    <h2><span>3</span> Оплата</h2>
-                    <div class="delivery-methods">
-                        <div class="method-card active">💵 Готівка</div>
-                        <div class="method-card" style="opacity:0.5; cursor:not-allowed;">💳 Картою</div>
-                    </div>
-                    <textarea name="Коментар" class="form-control" rows="2" placeholder="Коментар до замовлення..."></textarea>
+                    <input type="text" placeholder="Місто / Село" style="margin-top: 15px;">
+                    <input type="text" placeholder="Оберіть номер відділення..." style="margin-top: 10px;">
                 </div>
             </div>
-
-            <div>
-                <div class="section-box" style="position: sticky; top: 100px;">
-                    <h3 style="margin-top:0">Ваше замовлення</h3>
-                    <div id="order-list" style="margin: 20px 0; font-size: 14px;"></div>
-                    <hr style="border:0; border-top:1px solid #eee;">
-                    <div class="total-amount" id="final-price">0 грн</div>
-                    <button type="submit" id="submit-btn" class="btn-confirm">ПІДТВЕРДИТИ</button>
-                    <input type="hidden" name="Список_Товарів" id="hidden-items">
-                    <input type="hidden" name="Сума" id="hidden-total">
+            <div class="right">
+                <div class="box" style="position: sticky; top: 100px;">
+                    <h3>Ваше замовлення</h3>
+                    <div id="summary-items" style="color: #666; font-size: 14px; margin: 20px 0;">Товари додано до кошика</div>
+                    <hr style="border: none; border-top: 1px solid #eee;">
+                    <div class="summary-total" id="final-sum">0 грн</div>
+                    <button type="submit" class="btn-confirm">ПІДТВЕРДИТИ</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
 
-<div class="cart-overlay" id="cart-overlay" onclick="toggleCart(false)"></div>
-<div class="cart-sidebar" id="cart-sidebar">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
+<div class="cart-overlay" id="overlay" onclick="toggleCart(false)"></div>
+<div class="cart-sidebar" id="sidebar">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
         <h3>Кошик</h3>
-        <button onclick="toggleCart(false)" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+        <button onclick="toggleCart(false)" style="background:none; border:none; font-size:28px; cursor:pointer;">&times;</button>
     </div>
-    <div id="cart-content" style="height: 70%; overflow-y: auto; margin-top:10px;"></div>
-    <div style="border-top:1px solid #eee; padding-top: 20px;">
-        <p>Разом: <b id="cart-total">0</b> грн</p>
-        <button class="btn-add" onclick="showCheckout()">ОФОРМИТИ</button>
+    <div id="cart-items" style="flex:1; overflow-y:auto;"></div>
+    <div style="border-top: 1px solid #eee; padding-top: 20px;">
+        <p>Разом: <b id="total-price">0</b> грн</p>
+        <button class="add-to-cart" onclick="goCheckout()">ОФОРМИТИ</button>
     </div>
 </div>
 
@@ -135,12 +118,12 @@
     ];
 
     function renderProducts() {
-        document.getElementById('products').innerHTML = products.map(p => `
-            <div class="card">
+        document.getElementById('product-list').innerHTML = products.map(p => `
+            <div class="product-card">
                 <img src="${p.img}">
                 <h4>${p.name}</h4>
-                <p><b>${p.price} грн</b></p>
-                <button class="btn-add" onclick="addToCart(${p.id})">Додати в кошик</button>
+                <div class="price">${p.price} грн</div>
+                <button class="add-to-cart" onclick="addToCart(${p.id})">Додати в кошик</button>
             </div>
         `).join('');
     }
@@ -149,59 +132,38 @@
         let p = products.find(x => x.id === id);
         let inCart = cart.find(x => x.id === id);
         if (inCart) inCart.qty++; else cart.push({...p, qty: 1});
-        updateCart();
-        // Рядок toggleCart(true) видалено, щоб кошик не вискакував
+        updateUI();
+        // ВАЖЛИВО: Тут більше немає виклику відкриття кошика!
     }
 
-    function updateCart() {
+    function updateUI() {
         let total = cart.reduce((s, i) => s + (i.price * i.qty), 0);
         document.getElementById('cart-count').innerText = cart.length;
-        document.getElementById('cart-total').innerText = total;
-        document.getElementById('cart-content').innerHTML = cart.map(i => `
-            <div style="margin-bottom:10px; display:flex; justify-content:space-between; font-size:14px;">
+        document.getElementById('total-price').innerText = total;
+        document.getElementById('final-sum').innerText = total + " грн";
+        
+        document.getElementById('cart-items').innerHTML = cart.map(i => `
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
                 <span>${i.name} x${i.qty}</span>
                 <b>${i.price * i.qty} грн</b>
             </div>
         `).join('');
-        
-        document.getElementById('final-price').innerText = total + " грн";
-        document.getElementById('hidden-total').value = total + " грн";
-        document.getElementById('hidden-items').value = cart.map(i => `${i.name} x${i.qty}`).join(', ');
-        document.getElementById('order-list').innerHTML = cart.map(i => `<div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>${i.name} x${i.qty}</span><span>${i.price*i.qty} грн</span></div>`).join('');
+
+        document.getElementById('summary-items').innerHTML = cart.map(i => `<div>${i.name} x${i.qty}</div>`).join('');
     }
 
-    function toggleCart(s) {
-        document.getElementById('cart-sidebar').classList.toggle('active', s);
-        document.getElementById('cart-overlay').style.display = s ? 'block' : 'none';
+    function toggleCart(show) {
+        document.getElementById('sidebar').classList.toggle('active', show);
+        document.getElementById('overlay').style.display = show ? 'block' : 'none';
     }
 
-    function showCheckout() {
-        if (cart.length === 0) return alert("Кошик порожній!");
+    function goCheckout() {
+        if (cart.length === 0) return;
         toggleCart(false);
         document.getElementById('shop-page').style.display = 'none';
         document.getElementById('checkout-page').style.display = 'block';
         window.scrollTo(0,0);
     }
-
-    function setDelivery(mode) {
-        document.getElementById('delivery-type').value = (mode === 'NP' ? 'Нова Пошта' : 'Укрпошта');
-        document.getElementById('np-card').classList.toggle('active', mode === 'NP');
-        document.getElementById('up-card').classList.toggle('active', mode === 'UP');
-    }
-
-    document.getElementById('checkout-form').onsubmit = function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('submit-btn');
-        btn.disabled = true; btn.innerText = "ОБРОБКА...";
-        fetch("https://formspree.io/f/mzdvkpqk", {
-            method: "POST",
-            body: new FormData(this),
-            headers: { 'Accept': 'application/json' }
-        }).then(() => {
-            alert("Замовлення прийнято! Менеджер скоро зателефонує.");
-            location.reload();
-        });
-    };
 
     renderProducts();
 </script>
